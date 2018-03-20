@@ -1,6 +1,10 @@
 package vagues;
 
+import java.awt.BufferCapabilities;
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable
 // or extends thread 
@@ -22,7 +26,7 @@ public class Game extends Canvas implements Runnable
 	}
 	
 	
-	
+	// start method and start a new thread 
 	public synchronized void start() {
 		
 		thread = new Thread(this);
@@ -33,7 +37,9 @@ public class Game extends Canvas implements Runnable
 	
 	
 	
+	/*
 	
+	// stop method and start a new thread
 public synchronized void stop() {
 		
 	try {
@@ -44,6 +50,7 @@ public synchronized void stop() {
 		e.printStackTrace();
 	}
 	}
+	*/
 /*	
 public void run() {
 	  long lastTime = System.nanoTime(); // get current time to the nanosecond
@@ -80,7 +87,60 @@ public void run() {
 	 }
 	*/
 
+	
+	@Override
+	public void run() {
+	
+		long lastTime = System.nanoTime();// time in nano sec
+		double ammountOfTicks  = 60.0; //number of ticks
+		double ns = 1000000000 / ammountOfTicks ; 
+		double delta = 0 ; // change in time 
+		long timer = System.currentTimeMillis();// time in milli sec
+	int frames = 0 ; // set frame variable 
+		
+		
+		while(running ) {
+			long now= System.nanoTime();// current time
+			delta += (now - lastTime)/ns;
+			lastTime= now; 
+			while(delta >= 1) {
+				  tick();  
+				    delta--;  // lower our delta back to 0 to start our next frame wait
+			}
+			if(running){
+			    render(); // render the visuals of the game
+			   }
+			frames++; // note that a frame has passed
+			   if(System.currentTimeMillis() - timer > 1000 ){ // if one second has passed
+			    timer+= 1000; // add a thousand to our timer for next time
+			    System.out.println("FPS: " + frames); // print out how many frames have happend in the last second
+			    frames = 0; // reset the frame count for the next second
+			   }
+		}
+		//stop(); // no longer running stop the thread
+		
+	}
 
+	private void tick() {
+		
+	}
+	private void render()
+	{
+		
+		
+		BufferStrategy bs= this.getBufferStrategy() ;
+		if(bs == null) {
+			this.createBufferStrategy(3);
+			return;
+			
+		}
+		Graphics g= bs.getDrawGraphics();
+//		g.setColor(Color.black);
+//		g.fillRect(0, 0, width,HEIGHT);
+		
+		g.dispose();
+		bs.show();
+	}
 
 	public static void main(String[] args) {
 		
@@ -91,11 +151,7 @@ public void run() {
 
 
 
-@Override
-public void run() {
-	// TODO Auto-generated method stub
-	
-}
+
 
 	
 	
