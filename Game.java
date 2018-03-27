@@ -5,23 +5,32 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
+
+
 
 public class Game extends Canvas implements Runnable
 // or extends thread 
 {
 
 	
-	public static final int width = 640,length = width / 12*9 ;
+	public static final int width = 640,height  = width / 12*9 ;
 	
 	// create a thread 
 	private Thread thread;
 	private boolean running = true;
+	private Random random;
 	
-	
+	Handler handles;
 		
 	
 	public Game() {
-		window win = new window(width, length, " *^* Console *^* ", this);
+		window win = new window(width, height, " *^* Console *^* ", this);
+		handles = new Handler();
+		random = new Random();
+		for( int i = 1; i < 50;++i) {
+		handles.addobj(new Player(random.nextInt(width), random.nextInt(height), ID.Player));
+		}
 
 	}
 	
@@ -34,8 +43,8 @@ public class Game extends Canvas implements Runnable
 	running = true;
 	}
 	
-	
-	
+	// stop method // running = false
+
 	
 	/*
 	
@@ -91,7 +100,9 @@ public void run() {
 	@Override
 	public void run() {
 	
+		// reterive system's time in nano second 
 		long lastTime = System.nanoTime();// time in nano sec
+		// how many we want our update method to run 
 		double ammountOfTicks  = 60.0; //number of ticks
 		double ns = 1000000000 / ammountOfTicks ; 
 		double delta = 0 ; // change in time 
@@ -100,13 +111,16 @@ public void run() {
 		
 		
 		while(running ) {
+			// again get sytem's time in nano sec. we are getting it again coz system takes time to run run this loop
 			long now= System.nanoTime();// current time
 			delta += (now - lastTime)/ns;
 			lastTime= now; 
 			while(delta >= 1) {
-				  tick();  
+				  update();  // update 
 				    delta--;  // lower our delta back to 0 to start our next frame wait
 			}
+			
+	
 			if(running){
 			    render(); // render the visuals of the game
 			   }
@@ -120,26 +134,40 @@ public void run() {
 		//stop(); // no longer running stop the thread
 		
 	}
-
-	private void tick() {
+	//Tick or update method it is logic method
+	private void update() {
+		handles.update();
 		
 	}
+	
+	/*
+	 * 
+	 * GRAPHICALL METHODS 
+	 * 
+	 * 
+	 */
 	private void render()
 	{
 		
-		
-		BufferStrategy bs= this.getBufferStrategy() ;
-		if(bs == null) {
-			this.createBufferStrategy(3);
-			return;
-			
+		BufferStrategy buff= this.getBufferStrategy();
+		if(buff == null) {
+		 this.createBufferStrategy(3);
+		 return ;
 		}
-		Graphics g= bs.getDrawGraphics();
-//		g.setColor(Color.black);
-//		g.fillRect(0, 0, width,HEIGHT);
 		
+		Graphics g = buff.getDrawGraphics();
+		// Now here is the trick this set color and rect fill is for window fill and color in window 
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
+		// this handles fill color in player, getting graphics from buffer and getting inputs from player object 
+		handles.render(g);
+	
+		// we have to use each graphic to show before we dispose it, mean destroy it.
 		g.dispose();
-		bs.show();
+		buff.show();
+		
+		
 	}
 
 	public static void main(String[] args) {
