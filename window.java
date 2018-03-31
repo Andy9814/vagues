@@ -6,9 +6,11 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 public class window extends Canvas {
+	
+	
 
-	public window(int width,int length,String name, Game g) {
-		JFrame frame = new JFrame(name);
+	public window(int width,int length,String name, Game g,int frames) {
+		JFrame frame = new JFrame(name + frames);
 	//	frame.setPreferredSize(new Dimension(width, length));	
 		
 		//set size 
@@ -29,8 +31,13 @@ public class window extends Canvas {
 	
 		
 		frame.setVisible(true);
-		
+		frame.setTitle(name + frames);
 		g.start();
+	}
+
+	public void add(JFrame frame) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -9,15 +9,13 @@ public class Player extends GameObject{
 	Random r = new Random();
 	public Player(int x, int y, ID id) {
 		super(x, y, id);
-		velX = r.nextInt(5);
-		
-		velY = r.nextInt(5);
+	
 		}
 
 
 	public void update() {
-		x = x +velX;
-		y = y + velY;
+		x += 0;
+		y += 0;
 		
 	}
 
