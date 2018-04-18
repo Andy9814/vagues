@@ -3,7 +3,7 @@ package vagues;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
-public class Handler {
+public class handler {
 
 	LinkedList<GameObject> objList = new LinkedList<GameObject>();
 	

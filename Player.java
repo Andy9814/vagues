@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Player extends GameObject{
 
-	Random r = new Random();
+
 	public Player(int x, int y, ID id) {
 		super(x, y, id);
 	
@@ -14,14 +14,15 @@ public class Player extends GameObject{
 
 
 	public void update() {
-		x += 0;
-		y += 0;
+		x += velX;
+		y += velY;
 		
 	}
 
 	
 	public void render(Graphics g) {
-		g.setColor(Color.GREEN);
+		if(id == id.Player) {g.setColor(Color.GREEN);}
+		else if(id== id.player2) { g.setColor(Color.RED);}
 	g.fillRect(x, y, 32, 32);
 	
 		

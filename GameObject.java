@@ -19,5 +19,90 @@ public abstract class GameObject {
 	 
 	public abstract void update();
 	public abstract void render(Graphics g);
+	
+	
+	// getter and setter methods for x and y
+	
+	
+	public int  getx() {
+	
+		
+		
+		return x;
+				
+				
+	}
+	
+public  void   setx( int x) {
+	this.x = x;
+		
+		
+		
+				
+	}
+
+public int  gety() {
+	
+	
+	
+	return y;
+			
+			
+}
+
+public void sety(int y) {
+	this.y = y;
+	
+
+			
+}
+      
+
+public int  getVelx() {
+
+	
+	
+	return velX;
+			
+			
+}
+
+public  void   setVelx( int x) {
+this.velX = x;
+	
+	
+	
+			
+}
+
+public int  getVelY() {
+
+
+
+return velY;
+		
+		
+}
+
+public void setVely(int y) {
+this.velY = y;
+
+
+		
+}
+
+
+public ID  getID (){
+	
+	return id;
+			
+}
+
+public void setID (ID id){
+	
+	this.id = id;
+}
+
+
 	 
 }

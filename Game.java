@@ -6,8 +6,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.PopupMenu;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import javax.swing.InputMap;
 import javax.swing.JFrame;
 
 
@@ -26,18 +28,21 @@ public class Game extends Canvas implements Runnable
 	private boolean running = false;
 	private Random random;
 	
-	Handler handles;
+private	handler handles;
 private window win;
 	
 
 	public Game() {
 		// we need to put it above window
-		handles = new Handler();
+		handles = new handler();
+		
 		random = new Random();
 		 win =	 new window(width, height, " *^* Console *^*   ", this,frames);
 			
 		handles.addobj(new Player(300, 150, ID.Player));
 		
+		handles.addobj(new Player(400, 150, ID.player2));
+		this.addKeyListener(new KeyInput(handles));
 
 	}
 	// start method and start a new thread 
@@ -84,7 +89,7 @@ private window win;
 			   if(System.currentTimeMillis() - timer > 1000 ){ // if one second has passed
 			    timer+= 1000; // add a thousand to our timer for next time
 			   
-			    System.out.println("FPS: " + frames); // print out how many frames have happend in the last second
+			  //  System.out.println("FPS: " + frames); // print out how many frames have happend in the last second
 			   frames = 0; // reset the frame count for the next second
 			   }
 		}
@@ -130,6 +135,14 @@ public synchronized void stop() {
 	 */
 	private void render()
 	{
+//		Graphics panGraphics = this.getGraphics();
+//		BufferedImage buffImage= new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		
+		
+		
+		
+		
+		
 		
 		BufferStrategy buff= this.getBufferStrategy();
 		if(buff == null) {

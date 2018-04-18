@@ -35,9 +35,5 @@ public class window extends Canvas {
 		g.start();
 	}
 
-	public void add(JFrame frame) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	 
 }
